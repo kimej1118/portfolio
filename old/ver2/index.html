@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ko" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KimSeoWan - Web Publisher Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    
+    <script>
+        // Tailwind CSS 커스터마이징 (다크 모드 기본 설정)
+        tailwind.config = {
+            darkMode: 'class', // HTML 태그의 class="dark"를 기준으로 다크 모드 활성화
+            theme: {
+                extend: {
+                    colors: {
+                        'background-dark': '#0d111c', // 매우 어두운 배경
+                        'card-dark': '#161b25',       // 카드 배경 (더 밝은)
+                        'text-light': '#f8fafc',      // 밝은 텍스트
+                        'text-dark': '#94a3b8',       // 보조 텍스트
+                        'accent': '#3b82f6',          // blue-500
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 커스텀 스크롤바 스타일 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #475569; /* slate-600 */
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background-color: #0d111c;
+        }
+        /* GSAP 애니메이션 시작 전 초기 상태 */
+        .gsap-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+        /* 첨부 이미지 레이아웃을 위한 커스텀 스타일 */
+        .section-container {
+            max-width: 1024px; /* lg:max-w-5xl */
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        .header-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #3b82f6;
+        }
+        /* Hero Headline Span 스타일  */
+        .hero-headline span {
+            display: inline-block;
+        }
+        #about, #experience, #projects, #education {
+            scroll-margin-top: 80px; /* 헤더 높이 + 약간의 여백 */
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 dark:bg-background-dark text-slate-800 dark:text-text-light transition-colors duration-500">
+
+    <header class="fixed top-0 left-0 right-0 z-50 p-4 bg-white/5 dark:bg-card-dark/50 backdrop-blur-sm transition-colors duration-500">
+        <div class="section-container flex justify-between items-center">
+            <h1 class="text-xl font-bold text-accent">KimSeoWan</h1>
+            <nav>
+                <button id="theme-toggle" class="text-xl p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
+                    <i id="sun-icon" class="bi bi-sun-fill text-yellow-500 hidden"></i>
+                    <i id="moon-icon" class="bi bi-moon-fill text-slate-500 dark:text-slate-200"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="pt-20">
+        
+        <section id="hero" class="h-screen flex items-center justify-center p-4">
+            <div class="text-center">
+                
+                <h2 class="hero-headline text-6xl md:text-8xl font-extrabold mb-6 leading-tight dark:text-white text-gray-900 tracking-tight" id="hero-title">Kim Seo Wan</h2>
+                
+                <p class="text-md md:text-base dark:text-text-dark max-w-xl mx-auto mb-10" id="hero-subtitle">
+                    비전공자도 충분히 해낼 수 있다는 자신감 하나로 달려온 퍼블리셔 3년차, <br class="hidden md:inline"/>이제는 프론트엔드 개발까지 공부하여 제대로 해내고 싶은 김서완입니다.
+                </p>
+                
+                <div class="space-x-4" id="hero-buttons">
+                    <a href="#projects" class="inline-block px-8 py-3 dark:bg-accent bg-blue-700 text-white font-bold rounded-lg hover:bg-blue-600 transition-colors duration-300 shadow-lg">
+                        작업 보기
+                    </a>
+                    <a href="#experience" class="inline-block px-8 py-3 dark:border-white border-gray-700 border dark:text-white text-gray-900 dark:text-text-light font-bold rounded-lg hover:bg-white/10 transition-colors duration-300">
+                        경력 보기
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="section-container p-8 lg:p-12 mb-20 gsap-reveal">
+            <h2 class="header-title">👋 소개 (Introduction)</h2>
+            <div class="grid md:grid-cols-2 gap-8 dark:bg-card-dark rounded-lg p-6 shadow-xl border-l-4 border-accent/70">
+                
+                <div class="space-y-4 pr-4 border-r dark:border-slate-700/50 md:text-right flex flex-col justify-center">
+                    <div class="mb-4">
+                        <p class="text-sm dark:text-text-dark">퍼블리싱 / 프론트엔드</p>
+                        <p class="text-xl font-bold">김서완 (KimSeoWan)</p>
+                    </div>
+                </div>
+
+                <div class="space-y-4 pl-4">
+                    <div class="text-sm">
+                        <p class="dark:text-text-dark">주요 기술 스택:</p>
+                        <p>HTML5, CSS3/SCSS, JavaScript, jQuery, GSAP, Tailwind CSS</p>
+                    </div>
+                    <div class="mb-4">
+                        <p class="text-sm dark:text-text-dark">이메일:</p>
+                        <p>kimbud0218@gmail.com</p>
+                    </div>
+                    <div class="text-sm">
+                        <p class="dark:text-text-dark">경력:</p>
+                        <p>총 3년 7개월 (2025.12 기준)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="experience" class="section-container p-8 lg:p-12 mb-20">
+            <h2 class="header-title gsap-reveal">💼 경력 (Career)</h2>
+
+            <div class="dark:bg-card-dark bg-white rounded-lg shadow-2xl border-l-4 border-accent/70 overflow-hidden gsap-reveal">
+
+                <div class="hidden md:grid md:grid-cols-10 bg-slate-100 dark:bg-card-dark/80  font-medium text-xs uppercase tracking-wider text-slate-500 dark:text-text-dark/80 border-b border-slate-300 dark:border-slate-700">
+                    <div class="col-span-2 px-6 py-3 text-left">경력 (회사)</div>
+                    <div class="col-span-2 px-6 py-3 text-left">기간</div>
+                    <div class="col-span-2 px-6 py-3 text-left">역할</div>
+                    <div class="col-span-4 px-6 py-3 text-left">경력기술 (링크 이동)</div>
+                </div>
+                <div class="divide-y dark:divide-slate-700/50">
+                    
+                    <div class="p-4 md:p-0 grid grid-cols-1 md:grid-cols-10 gap-4 md:gap-0 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors">
+                        
+                        <div class="col-span-2 md:border-r dark:border-slate-700/50 md:px-6 md:py-4">
+                            <p class="md:hidden text-xs font-medium text-slate-500 uppercase dark:text-text-dark/80 mb-1">경력 (회사)</p>
+                            <span class="text-lg font-bold">㈜ 플레인랩</span>
+                        </div>
+                        
+                        <div class="col-span-2 md:border-r dark:border-slate-700/50 md:px-6 md:py-4">
+                            <p class="md:hidden text-xs font-medium text-slate-500 uppercase dark:text-text-dark/80 mb-1">기간</p>
+                            <span class="text-sm dark:text-text-dark">2023.03 ~ 2025.08</span><br>
+                            <span class="text-xs">2년 6개월</span>
+                        </div>
+
+                        <div class="col-span-2 md:border-r dark:border-slate-700/50 md:px-6 md:py-4">
+                            <p class="md:hidden text-xs font-medium text-slate-500 uppercase dark:text-text-dark/80 mb-1">역할</p>
+                            <span class="text-sm dark:text-text-dark">퍼블리셔</span><br>
+                            <span class="font-semibold text-accent text-sm">(대리 2년차)</span>
+                        </div>
+                        
+                        <div class="col-span-4 md:px-6 md:py-4">
+                            <p class="md:hidden text-xs font-medium text-slate-500 uppercase dark:text-text-dark/80 mb-2">경력기술 (링크 이동)</p>
+                            <ul class="space-y-1">
+                                <li><a href="https://playtimemall.com/" class="text-blue-400 hover:text-blue-300 transition-colors text-sm" target="_blank">플레이타임 쇼핑몰 구축 ↗</a></li>
+                                <li><a href="http://lckcl.co.kr/" class="text-blue-400 hover:text-blue-300 transition-colors text-sm" target="_blank">LCK CL 홈페이지 리뉴얼 ↗</a></li>
+                                <li><a href="http://e-games.or.kr/" class="text-blue-400 hover:text-blue-300 transition-colors text-sm" target="_blank">Keg 홈페이지 리뉴얼 ↗</a></li>
+                                <li><a href="https://docs.google.com/spreadsheets/d/1_UhJSBo7ULWYw0KosBhMDCN5WsJqGFSB7BOGfDqOCYY/edit?usp=sharing" class="text-blue-400 hover:text-blue-300 transition-colors text-sm" target="_blank">웹젠 게임 이벤트 페이지 퍼블리싱 ↗</a></li>
+                                <li><a href="https://hopebridge.or.kr/hope/newsletters.php" class="text-blue-400 hover:text-blue-300 transition-colors text-sm" target="_blank">희망브리지 유지보수(뉴스레터) ↗</a></li>
+                                <li><a href="https://hopebridge.or.kr/support/camfundraising.php" class="text-blue-400 hover:text-blue-300 transition-colors text-sm" target="_blank">희망브리지 유지보수(모금함) ↗</a></li>
+                                <li><a href="https://hopebridge.or.kr/" class="text-blue-400 hover:text-blue-300 transition-colors text-sm" target="_blank">희망브리지 홈페이지 리뉴얼 ↗</a></li>
+                                <li><a href="#kespa-maint" class="text-blue-400 hover:text-blue-300 transition-colors text-sm" target="_blank">한국 이스포츠 협회 사업 페이지 유지보수 ↗</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="p-4 md:p-0 grid grid-cols-1 md:grid-cols-10 gap-4 md:gap-0 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors">
+                        
+                        <div class="col-span-2 md:border-r dark:border-slate-700/50 md:px-6 md:py-4">
+                            <p class="md:hidden text-xs font-medium text-slate-500 uppercase dark:text-text-dark/80 mb-1">경력 (회사)</p>
+                            <span class="text-lg font-bold">㈜ 이지웹피아</span>
+                        </div>
+                        
+                        <div class="col-span-2 md:border-r dark:border-slate-700/50 md:px-6 md:py-4">
+                            <p class="md:hidden text-xs font-medium text-slate-500 uppercase dark:text-text-dark/80 mb-1">기간</p>
+                            <span class="text-sm dark:text-text-dark">2021.03 ~ 2022.03</span><br>
+                            <span class="text-xs">1년 1개월</span>
+                        </div>
+
+                        <div class="col-span-2 md:border-r dark:border-slate-700/50 md:px-6 md:py-4">
+                            <p class="md:hidden text-xs font-medium text-slate-500 uppercase dark:text-text-dark/80 mb-1">역할</p>
+                            <span class="text-sm dark:text-text-dark">퍼블리셔</span><br>
+                            <span class="font-semibold text-sm">(사원)</span>
+                        </div>
+                        
+                        <div class="col-span-4 md:px-6 md:py-4">
+                            <p class="md:hidden text-xs font-medium text-slate-500 uppercase dark:text-text-dark/80 mb-2">경력기술 (링크 이동)</p>
+                            <ul class="space-y-1">
+                                <li><a href="#none" class="text-blue-400 hover:text-blue-300 transition-colors text-sm" target="_blank">회사 홈페이지 리뉴얼 및 CI 제작 ↗</a></li>
+                                <li><a href="#none" class="text-blue-400 hover:text-blue-300 transition-colors text-sm" target="_blank">홍보물 및 SNS 영상 콘텐츠 제작 ↗</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+        <!-- 프로젝트 -->
+        <section id="projects" class="section-container p-8 lg:p-12 mb-20">
+            <h2 class="header-title gsap-reveal">🚀 프로젝트 상세 (Project Details)</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <div class="p-6 dark:bg-card-dark bg-white rounded-lg shadow-xl border-l-4 border-accent/70 h-full flex flex-col gsap-reveal">
+                    <p class="text-sm font-medium text-accent">플레이랩 · 2025.05 ~ 2025.07</p>
+                    <h3 class="text-xl font-bold mt-1 mb-3">플레이타임 쇼핑몰 구축</h3>
+                    <p class="text-sm dark:text-text-dark mb-2">담당 역할: 퍼블리셔</p>
+                    <p class="text-sm dark:text-text-dark mb-4">기술 스택: HTML5, CSS3(SCSS), JavaScript, jQuery, Cafe24</p>
+                    
+                    <ul class="list-disc list-inside text-sm dark:text-text-dark space-y-1 mt-auto">
+                        <li>Cafe24 기본 스킨 기반 커스터마이징 및 디자인 반영 (반응형 대응)</li>
+                        <li>결제, 프로모션, 상품 정렬 등 주요 기능에 대한 QA 및 퍼블리싱 점검</li>
+                    </ul>
+                </div>
+
+                <div class="p-6 dark:bg-card-dark bg-white rounded-lg shadow-xl border-l-4 border-accent/70 h-full flex flex-col gsap-reveal">
+                    <p class="text-sm font-medium text-accent">플레이랩 · 2023.03 ~ 2025.04</p>
+                    <h3 class="text-xl font-bold mt-1 mb-3">웹젠 게임 이벤트 페이지 퍼블리싱</h3>
+                    <p class="text-sm dark:text-text-dark mb-2">담당 역할: 퍼블리셔</p>
+                    <p class="text-sm dark:text-text-dark mb-4">기술 스택: HTML5, SCSS, jQuery, JavaScript, Git</p>
+                    
+                    <ul class="list-disc list-inside text-sm dark:text-text-dark space-y-1 mt-auto">
+                        <li>뮤 온라인, 샷 온라인 등 다수 게임의 이벤트 페이지 제작</li>
+                        <li>월 평균 10~15건 이벤트 페이지 퍼블리싱, 글로벌/다국어 대응</li>
+                    </ul>
+                </div>
+
+                <div class="p-6 dark:bg-card-dark bg-white rounded-lg shadow-xl border-l-4 border-accent/70 h-full flex flex-col gsap-reveal">
+                    <p class="text-sm font-medium text-accent">플레이랩 · 2023.03 ~ 2025.05</p>
+                    <h3 class="text-xl font-bold mt-1 mb-3">희망브리지 유지보수 (뉴스레터/모금함)</h3>
+                    <p class="text-sm dark:text-text-dark mb-2">담당 역할: 퍼블리셔</p>
+                    <p class="text-sm dark:text-text-dark mb-4">기술 스택: HTML5, SCSS, jQuery, JavaScript, Git</p>
+                    
+                    <ul class="list-disc list-inside text-sm dark:text-text-dark space-y-1 mt-auto">
+                        <li>이메일 뉴스레터 퍼블리싱 및 이메일 클라이언트 호환성 고려</li>
+                        <li>모금함 페이지 제작 및 유지보수</li>
+                    </ul>
+                </div>
+                
+                <div class="p-6 dark:bg-card-dark bg-white rounded-lg shadow-xl border-l-4 border-accent/70 h-full flex flex-col gsap-reveal">
+                    <p class="text-sm font-medium text-accent">플레이랩 · 2024.11 ~ 2025.02</p>
+                    <h3 class="text-xl font-bold mt-1 mb-3">희망브리지 홈페이지 리뉴얼</h3>
+                    <p class="text-sm dark:text-text-dark mb-2">담당 역할: 퍼블리셔</p>
+                    <p class="text-sm dark:text-text-dark mb-4">기술 스택: HTML5, SCSS, jQuery, JavaScript, Git</p>
+                    
+                    <ul class="list-disc list-inside text-sm dark:text-text-dark space-y-1 mt-auto">
+                        <li>리뉴얼 퍼블리싱 및 라이브 전 QA, UI/개발 오류 검수</li>
+                        <li>외주 개발사와 협업하여 일정 및 품질 관리 수행</li>
+                    </ul>
+                </div>
+
+                <div class="p-6 dark:bg-card-dark bg-white rounded-lg shadow-xl border-l-4 border-accent/70 h-full flex flex-col gsap-reveal">
+                    <p class="text-sm font-medium text-accent">플레이랩 · 2023.03 ~ 2025.07</p>
+                    <h3 class="text-xl font-bold mt-1 mb-3">한국 이스포츠 협회 사업 페이지 유지보수</h3>
+                    <p class="text-sm dark:text-text-dark mb-2">담당 역할: 퍼블리셔</p>
+                    <p class="text-sm dark:text-text-dark mb-4">기술 스택: HTML5, SCSS, jQuery, JavaScript, Git</p>
+                    
+                    <ul class="list-disc list-inside text-sm dark:text-text-dark space-y-1 mt-auto">
+                        <li>LCK 아카데미, 챌린저스, Keg 등 관련 페이지 유지보수</li>
+                        <li>기능 수정, QA 및 퍼블리싱 코드 점검</li>
+                    </ul>
+                </div>
+                
+                <div class="p-6 dark:bg-card-dark bg-white rounded-lg shadow-xl border-l-4 border-accent/70 h-full flex flex-col gsap-reveal">
+                    <p class="text-sm font-medium text-accent">이지웹피아 · 2021.03 ~ 2021.04</p>
+                    <h3 class="text-xl font-bold mt-1 mb-3">회사 홈페이지 리뉴얼 및 CI 제작</h3>
+                    <p class="text-sm dark:text-text-dark mb-2">담당 역할: 퍼블리셔 / 디자이너</p>
+                    <p class="text-sm dark:text-text-dark mb-4">기술 스택: HTML5, CSS3, jQuery, Cafe24, Photoshop, Illustrator</p>
+                    
+                    <ul class="list-disc list-inside text-sm dark:text-text-dark space-y-1 mt-auto">
+                        <li>입사 후 첫 프로젝트로 회사 홈페이지 리뉴얼 단독 진행</li>
+                        <li>Cafe24 스킨 커스터마이징 및 CI 제작</li>
+                    </ul>
+                </div>
+                
+                <div class="p-6 dark:bg-card-dark bg-white rounded-lg shadow-xl border-l-4 border-accent/70 h-full flex flex-col gsap-reveal">
+                    <p class="text-sm font-medium text-accent">이지웹피아 · 2021.06 ~ 2021.10</p>
+                    <h3 class="text-xl font-bold mt-1 mb-3">홍보물 및 SNS 영상 콘텐츠 제작</h3>
+                    <p class="text-sm dark:text-text-dark mb-2">담당 역할: 디자이너</p>
+                    <p class="text-sm dark:text-text-dark mb-4">사용 툴: Photoshop, Illustrator</p>
+                    
+                    <ul class="list-disc list-inside text-sm dark:text-text-dark space-y-1 mt-auto">
+                        <li>중국 SNS용 홍보 영상 자막 삽입 및 편집</li>
+                        <li>카드뉴스 및 포스터 제작</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="education" class="section-container p-8 lg:p-12 mb-20 gsap-reveal">
+            <h2 class="header-title">📚 Education & Activities</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <div class="p-6 dark:bg-card-dark bg-white rounded-lg shadow-xl border-l-4 border-accent/70 h-full flex flex-col gsap-reveal">
+                    <p class="text-sm font-medium text-accent mb-2">2022.04 ~ 2022.09</p>
+                    <h3 class="text-xl font-bold mb-1">이젠컴퓨터아카데미</h3>
+                    <p class="dark:text-text-dark mt-auto">[과정평가형] 자바(JAVA)기반 응용 SW 전문가 양성</p>
+                </div>
+
+                <div class="p-6 dark:bg-card-dark bg-white rounded-lg shadow-xl border-l-4 border-accent/70 h-full flex flex-col gsap-reveal">
+                    <p class="text-sm font-medium text-accent mb-2">2020.08 ~ 2021.02</p>
+                    <h3 class="text-xl font-bold mb-1">더조은아카데미</h3>
+                    <p class="dark:text-text-dark mt-auto">[스마트웹&콘텐츠개발] 반응형 UI/UX 콘텐츠 제작 전문가</p>
+                </div>
+
+                <div class="p-6 dark:bg-card-dark bg-white rounded-lg shadow-xl border-l-4 border-accent/70 h-full flex flex-col gsap-reveal">
+                    <p class="text-sm font-medium text-accent mb-2">2020.03 ~ 2020.05</p>
+                    <h3 class="text-xl font-bold mb-1">더조은아카데미</h3>
+                    <p class="dark:text-text-dark mt-auto">UI구현 (웹표준) - 재직자 과정</p>
+                </div>
+                
+                <div class="p-6 dark:bg-card-dark bg-white rounded-lg shadow-xl border-l-4 border-accent/70 h-full flex flex-col gsap-reveal">
+                    <p class="text-sm font-medium text-accent mb-2">2020.02 ~ 2020.03</p>
+                    <h3 class="text-xl font-bold mb-1">더조은아카데미</h3>
+                    <p class="dark:text-text-dark mt-auto">일러스트레이터 실무 - 재직자 과정</p>
+                </div>
+
+                <div class="p-6 dark:bg-card-dark bg-white rounded-lg shadow-xl border-l-4 border-accent/70 h-full flex flex-col gsap-reveal">
+                    <p class="text-sm font-medium text-accent mb-2">2019.12 ~ 2020.01</p>
+                    <h3 class="text-xl font-bold mb-1">더조은아카데미</h3>
+                    <p class="dark:text-text-dark mt-auto">포토샵 실무 - 재직자 과정</p>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+    
+    <footer class="text-center py-6 text-sm dark:bg-card-dark border-t dark:border-slate-700 transition-colors duration-500">
+        <p class="dark:text-text-dark text-slate-500">&copy; 2025 KimSeoWan. All Rights Reserved.</p>
+        <p class="dark:text-text-dark text-slate-500 mt-1">Powered by HTML5, Tailwind CSS, and GSAP.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const html = document.documentElement;
+            const toggleButton = document.getElementById('theme-toggle');
+            const sunIcon = document.getElementById('sun-icon');
+            const moonIcon = document.getElementById('moon-icon');
+
+            // 초기 테마 설정
+            const currentTheme = localStorage.getItem('theme');
+            if (currentTheme) {
+                html.classList.add(currentTheme);
+            } else {
+                html.classList.add('dark'); // 기본값: dark 모드
+            }
+
+            const updateIcons = () => {
+                const isDark = html.classList.contains('dark');
+                sunIcon.classList.toggle('hidden', !isDark);
+                moonIcon.classList.toggle('hidden', isDark);
+            };
+            updateIcons();
+
+            // 다크 모드 토글 이벤트
+            toggleButton.addEventListener('click', () => {
+                const isDark = html.classList.toggle('dark');
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                updateIcons();
+            });
+
+            // GSAP 초기화
+            gsap.registerPlugin(ScrollTrigger);
+
+            // 애니메이션 시작 전 모든 Hero 요소의 초기 상태(opacity: 0, y: 20 등)를 설정
+            gsap.set(["#hero-subtitle", "#hero-title", "#hero-button"], { opacity: 0 }); 
+
+            gsap.timeline()
+                // subtitle: opacity 0, y 20 에서 시작하여 opacity 1, y 0 으로 종료
+                .fromTo("#hero-subtitle", 
+                    { opacity: 0, y: 20 }, 
+                    { opacity: 1, y: 0, duration: 0.5 }
+                )
+                // title: opacity 0, scale 0.8 에서 시작하여 opacity 1, scale 1 으로 종료
+                .fromTo("#hero-title", 
+                    { opacity: 0, scale: 0.8 }, 
+                    { opacity: 1, scale: 1, duration: 0.6 }, 
+                    "-=0.2" // 이전 애니메이션이 끝나기 0.2초 전에 시작
+                )
+                // button: opacity 0, y 20 에서 시작하여 opacity 1, y 0 으로 종료
+                .fromTo("#hero-button", 
+                    { opacity: 0, y: 20 }, 
+                    { opacity: 1, y: 0, duration: 0.4 }, 
+                    "-=0.3" // 이전 애니메이션이 끝나기 0.3초 전에 시작
+                );
+
+            // ** 텍스트 분리 로직 **
+            const headline = document.querySelector(".hero-headline");
+            if (headline) {
+                const text = headline.textContent;
+                headline.textContent = "";
+                
+                text.split("").forEach((char) => {
+                    if (char === " ") {
+                        // 공백은 span으로 감싸지 않고, 텍스트 노드로 추가 (기존 띄어쓰기 유지)
+                        headline.appendChild(document.createTextNode("\u00A0")); 
+                    } else {
+                        // 글자만 span으로 감싸서 애니메이션 적용
+                        const span = document.createElement("span");
+                        span.textContent = char;
+                        span.classList.add("text-char");
+                        headline.appendChild(span);
+                    }
+                });
+
+                // 텍스트 개별 글자 애니메이션은 .text-char 클래스에만 적용
+                gsap.fromTo(
+                    headline.querySelectorAll(".text-char"),
+                    { y: 0 },
+                    {
+                        y: -5,
+                        duration: 0.8,
+                        ease: "sine.inOut",
+                        yoyo: true,
+                        repeat: -1,
+                        stagger: { 
+                            each: 0.12,
+                            repeat: -1 
+                        }
+                    }
+                );
+            }
+            // 2. ScrollTrigger를 사용한 섹션별 나타나기 애니메이션
+            const revealElements = document.querySelectorAll('.gsap-reveal');
+            
+            revealElements.forEach((el) => {
+                el.classList.add('gsap-reveal');
+                
+                gsap.to(el, {
+                    y: 0,
+                    opacity: 1,
+                    duration: 1,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 85%", // 뷰포트의 85% 지점에서 애니메이션 시작
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
