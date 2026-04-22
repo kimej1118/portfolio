@@ -264,7 +264,23 @@ const projectsData = [
         periodShort: "2023.03 ~ 2025.07",
         title: "한국 이스포츠 협회 사업 페이지 유지보수",
         stackShort: ["HTML5", "SCSS", "Git"],
-        link:null,
+        link:[
+            {
+                url: "https://www.e-sports.or.kr/",
+                label: "사이트 바로가기 ↗(협회)",
+                target: "_blank"
+            },
+            {
+                url: "https://lck-academy.co.kr/",
+                label: "사이트 바로가기 ↗(아카데미)",
+                target: "_blank"
+            },
+            {
+                url: "http://lckcl.co.kr/",
+                label: "사이트 바로가기 ↗(챌린저스)",
+                target: "_blank"
+            }
+        ],
         summary:
             "LCK 아카데미/챌린저스 등 협회 사업 관련 페이지의 운영 유지보수 및 개선을 담당했습니다.",
         period: "2023.03 ~ 2025.07 (운영)",
@@ -491,46 +507,48 @@ function openModal(projectId) {
     )
     .join("");
 
-  // =========================
-  // 링크 주입 
-  // =========================
-  if (mLink) {
-    const hasLink =
-      !!project.link &&
-      typeof project.link.url === "string" &&
-      project.link.url.trim().length > 0;
+    // =========================
+    // 링크 주입 (단일 객체 및 배열 모두 대응)
+    // =========================
+    if (mLink) {
+        // 1. 데이터를 무조건 배열 형태로 정규화
+        const linkData = project.link;
+        let linksArray = [];
 
-    // 링크 없으면 안내 문구
-    if (!hasLink) {
-      mLink.innerHTML = `<span class="text-sm text-slate-500 dark:text-slate-400">등록된 링크가 없습니다.</span>`;
-    } else {
-      const url = project.link.url.trim();
+        if (Array.isArray(linkData)) {
+            linksArray = linkData;
+        } else if (linkData && typeof linkData === 'object' && linkData.url) {
+            linksArray = [linkData];
+        }
 
-      const label =
-        project.link.label && String(project.link.label).trim().length > 0
-          ? String(project.link.label).trim()
-          : "사이트 바로가기 ↗";
+        // 2. 링크가 없을 때 처리
+        if (linksArray.length === 0) {
+            mLink.innerHTML = `<span class="text-sm text-slate-500 dark:text-slate-400">등록된 링크가 없습니다.</span>`;
+        } else {
+            // 3. 배열을 순회하며 HTML 생성
+            mLink.innerHTML = `
+                <div class="flex flex-wrap gap-2">
+                    ${linksArray.map(link => {
+                        const url = String(link.url || "").trim();
+                        const label = String(link.label || "바로가기 ↗").trim();
+                        const target = String(link.target || "_blank").trim();
+                        const rel = target === "_blank" ? "noopener noreferrer" : "";
 
-      const target =
-        project.link.target && String(project.link.target).trim().length > 0
-          ? String(project.link.target).trim()
-          : "_blank";
-
-      const rel = target === "_blank" ? "noopener noreferrer" : "";
-
-      // 모달 안에 버튼 형태로 출력
-      mLink.innerHTML = `
-        <a
-          href="${url}"
-          target="${target}"
-          rel="${rel}"
-          class="inline-flex items-center gap-2 px-3 py-2 rounded-full bg-primary/10 text-primary font-bold text-sm hover:bg-primary hover:text-white transition-colors"
-        >
-          ${label}
-        </a>
-      `;
+                        return `
+                            <a
+                            href="${url}"
+                            target="${target}"
+                            rel="${rel}"
+                            class="inline-flex items-center gap-2 px-3 py-2 rounded-full bg-primary/10 text-primary font-bold text-sm hover:bg-primary hover:text-white transition-colors"
+                            >
+                            ${label}
+                            </a>
+                        `;
+                    }).join("")}
+                </div>
+            `;
+        }
     }
-  }
 
   // =========================
   // 상세 내용 리스트 주입
